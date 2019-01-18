@@ -22,9 +22,9 @@ module Chainer
         return if grad.nil?
           
         v = @state[:v]
-        v *= @hyperparam.momentum
-        v -= @hyperparam.lr * grad
-        param.data += v
+        v.inplace * @hyperparam.momentum
+        v.inplace - @hyperparam.lr * grad
+        param.data.inplace + v
       end 
     end
     

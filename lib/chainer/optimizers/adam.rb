@@ -27,10 +27,10 @@ module Chainer
 
         hp = @hyperparam
 
-        @state[:m] += (1 - hp.beta1) * (grad - @state[:m])
-        @state[:v] += (1 - hp.beta2) * (grad * grad - @state[:v])
+        @state[:m].inplace + (1 - hp.beta1) * (grad - @state[:m]).inplace
+        @state[:v].inplace + (1 - hp.beta2) * (grad * grad - @state[:v]).inplace
         xm = Chainer.get_array_module(grad)
-        param.data -= lr * @state[:m] / (xm::NMath.sqrt(@state[:v]) + hp.eps)
+        param.data.inplace - lr * @state[:m] / (xm::NMath.sqrt(@state[:v]).inplace + hp.eps)
       end
 
       def lr

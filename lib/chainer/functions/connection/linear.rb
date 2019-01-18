@@ -17,7 +17,7 @@ module Chainer
           y = x.dot(w.transpose).cast_to(x.class)
           if inputs.size == 3
             b = inputs[2]
-            y += b
+            y.inplace + b
           end
           return [y]
         end
